@@ -35,13 +35,13 @@ export default function Blog() {
   return (
     <div className="blog-page">
       <div className="blog-title">CryptoHub Blog</div>
-      <div className="blog-desc">
+      <p className="blog-desc">
         Insights, guides, and tips for everyone interested in cryptocurrency.
-      </div>
+      </p>
       <div className="blog-list">
         {blogPosts.map((post, idx) => (
           <div className="blog-card" key={idx}>
-            <div className="blog-card-title">{post.title}</div>
+            <h3 className="blog-card-title">{post.title}</h3>
             <div className="blog-card-date">{post.date}</div>
             <div className="blog-card-excerpt">{post.excerpt}</div>
             {/* In a real app, add a 'Read more' link or modal for full content */}
