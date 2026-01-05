@@ -47,6 +47,10 @@ export const CoinContextProvider = (props) => {
       }
     } catch (err) {
       console.error("Failed to fetch coins:", err);
+      console.log("Note: If you see a CORS error, you need to either:");
+      console.log("1. Add a CORS extension to your browser (like 'CORS Unblock')");
+      console.log("2. Set up a backend proxy server");
+      console.log("3. Get a CoinGecko API key and add it to .env file as VITE_CG_API_KEY");
       setAllCoin([]);
     } finally {
       setIsLoading(false);
@@ -61,7 +65,6 @@ export const CoinContextProvider = (props) => {
     allCoin,
     currency,
     setCurrency,
-    isLoading
     isLoading,
   }), [allCoin, currency, isLoading]);
   return (

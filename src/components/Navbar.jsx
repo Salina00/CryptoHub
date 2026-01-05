@@ -1,22 +1,21 @@
 import React, { useState, useEffect, useCallback } from "react";
-/* import { CoinContext } from "../context/CoinContext"; */
 import { useAuth } from "../context/AuthContext";
-/* import { useTheme } from "../context/ThemeContext"; */
+import { useTheme } from "../context/ThemeContext";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 
-import { FiMenu, FiX, FiUser, FiLogOut,FiLock } from "react-icons/fi"; // Added react-icons for cleaner UI
+import { FiMenu, FiX, FiUser, FiLogOut, FiLock } from "react-icons/fi";
 import "./Navbar.css";
 
 function Navbar() {
-  /* const { setCurrency } = useContext(CoinContext); */
   const { currentUser, logout ,isEmailProvider } = useAuth();
-  /* const { theme } = useTheme(); */
+  const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   const isDashboardPage = location.pathname === "/dashboard";
+  const isDark = theme === "dark";
 
   // Handle scroll effect for navbar
   useEffect(() => {
@@ -52,20 +51,16 @@ function Navbar() {
   }, [logout, navigate]);
 
   const navLinks = [
-    { to: "/", label: "Home", icon: <IoHomeOutline /> },
-    { to: "/pricing", label: "Pricing", icon: <IoPricetagsOutline /> },
-    { to: "/blog", label: "Blog", icon: <IoNewspaperOutline /> },
-    { to: "/features", label: "Features", icon: <IoRocketOutline /> },
     { to: "/", label: "Home" },
     { to: "/pricing", label: "Pricing" },
-    { to: "/blog", label: "Insights" }, // Renamed for professionalism
+    { to: "/blog", label: "Insights" },
     { to: "/features", label: "Features" },
   ];
 
   const authenticatedNavLinks = [
     ...navLinks,
-    { to: "/dashboard", label: "Dashboard", icon: <IoGridOutline /> },
-    { to: "/leaderboard", label: "Leaderboard", icon: <IoTrophyOutline /> },
+    { to: "/dashboard", label: "Dashboard" },
+    { to: "/leaderboard", label: "Leaderboard" },
   ];
 
   return (
@@ -86,7 +81,6 @@ function Navbar() {
             {(currentUser ? authenticatedNavLinks : navLinks).map((link) => (
               <li key={link.to} className={`nav-item ${location.pathname === link.to ? "active" : ""}`}>
                 <Link to={link.to} className="nav-link">
-                  <span className="nav-icon">{link.icon}</span>
                   {link.label}
                 </Link>
               </li>
@@ -101,19 +95,6 @@ function Navbar() {
             <div className="toggle-thumb"></div>
           </div>
         </div>
-
-        <select
-          className="currency-select"
-          onChange={(e) => {
-            const currency = currencies.find(c => c.value === e.target.value);
-            currencyHandler(currency);
-          }}
-          value={selectedCurrency.value}
-        >
-          <option value="usd">USD</option>
-          <option value="eur">EUR</option>
-          <option value="inr">INR</option>
-        </select>
 
         <div className="desktop-auth">
           {currentUser ? (
@@ -139,7 +120,7 @@ function Navbar() {
 
         {/* Mobile Toggle */}
         <div className="mobile-toggle" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-          {isMobileMenuOpen ? <IoClose size={28} /> : <IoMenu size={28} />}
+          {isMobileMenuOpen ? <FiX size={28} /> : <FiMenu size={28} />}
         </div>
       </div>
 
@@ -153,7 +134,6 @@ function Navbar() {
               onClick={() => setIsMobileMenuOpen(false)}
               className={`mobile-nav-item ${location.pathname === link.to ? "active" : ""}`}
             >
-              <span className="mobile-nav-icon">{link.icon}</span>
               {link.label}
             </Link>
           ))}
@@ -165,22 +145,6 @@ function Navbar() {
             <div className={`toggle-track ${isDark ? "dark" : "light"}`}>
               <div className="toggle-thumb"></div>
             </div>
-          </div>
-
-          <div className="mobile-control-item">
-            <span>Currency</span>
-            <select
-              className="currency-select mobile"
-              onChange={(e) => {
-                const currency = currencies.find(c => c.value === e.target.value);
-                currencyHandler(currency);
-              }}
-              value={selectedCurrency.value}
-            >
-              <option value="usd">USD</option>
-              <option value="eur">EUR</option>
-              <option value="inr">INR</option>
-            </select>
           </div>
         </div>
 

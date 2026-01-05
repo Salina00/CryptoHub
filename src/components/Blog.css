@@ -25,6 +25,8 @@
 
 .blog-page>.blog-desc:first-of-type {
   max-width: 850px;
+}
+
 /* Header */
 .blog-header {
   text-align: center;

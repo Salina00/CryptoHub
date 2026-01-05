@@ -9,6 +9,8 @@
 .hero {
     max-width: 800px;
     margin: 40px auto 20px auto;
+}
+
 /* 
   ------------------------
   Cosmic Hero Overlay
@@ -38,7 +40,6 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    text-fill-color: transparent;
     font-weight: 800;
     letter-spacing: 1px;
     margin-bottom: 0.2em;
@@ -130,6 +131,8 @@
     background-color: white;
     border-radius: 5px;
     font-size: 20px;
+}
+
 .search-bar-cosmic {
     display: flex;
     align-items: center;
@@ -286,6 +289,8 @@
     box-shadow: 0 25px 70px rgba(127, 92, 255, 0.4);
     border: 1px solid rgba(127, 92, 255, 0.3);
     overflow-x: auto;
+}
+
 /* Table Enhancements */
 .table-container {
     border-radius: 24px;
@@ -367,6 +372,8 @@
     100% {
         transform: rotate(360deg);
     }
+}
+
 .col-mcap {
     text-align: right;
     color: var(--text-muted);
@@ -436,7 +443,6 @@
         height: 35px;
         border-width: 3px;
     }
-}
 
     .table-header,
     .table-row {
