@@ -2,12 +2,11 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useTheme } from "../context/ThemeContext";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-
-import { FiMenu, FiX, FiUser, FiLogOut, FiLock } from "react-icons/fi";
+import { FiLock, FiMenu, FiX } from "react-icons/fi";
 import "./Navbar.css";
 
 function Navbar() {
-  const { currentUser, logout ,isEmailProvider } = useAuth();
+  const { currentUser, logout, isEmailProvider } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
@@ -15,7 +14,6 @@ function Navbar() {
   const [scrolled, setScrolled] = useState(false);
 
   const isDashboardPage = location.pathname === "/dashboard";
-  const isDark = theme === "dark";
 
   // Handle scroll effect for navbar
   useEffect(() => {
@@ -26,20 +24,6 @@ function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  /* 
-  const currencies = [
-    { label: "USD", value: "usd", symbol: "$" },
-    { label: "EUR", value: "eur", symbol: "€" },
-    { label: "INR", value: "inr", symbol: "₹" },
-  ];
-  */
-
-  /*
-  const currencyHandler = useCallback((currency) => {
-    setCurrency({ name: currency.value, Symbol: currency.symbol });
-  }, [setCurrency]);
-  */
-
   const handleLogout = useCallback(async () => {
     try {
       await logout();
@@ -49,6 +33,14 @@ function Navbar() {
       console.error("Failed to logout:", error);
     }
   }, [logout, navigate]);
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+  };
 
   const navLinks = [
     { to: "/", label: "Home" },
@@ -65,85 +57,91 @@ function Navbar() {
   ];
 
   return (
-    <nav className={`navbar ${scrolled ? "scrolled" : ""}`}>
-      <div className="navbar-container">
-        <Link to="/" className="navbar-brand">
-          <div className="logo-wrapper">
+    <nav 
+      className={`navbar ${scrolled ? "scrolled" : ""} ${isMobileMenuOpen ? "has-mobile-menu" : ""} ${isDashboardPage ? "is-dashboard" : ""}`}
+    >
+      <div className="navbar-content">
+        {/* Brand/Logo Section */}
+        <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
+          <div className="navbar-logo-icon">
             <img src="/crypto-logo.png" alt="CryptoHub" className="logo-img" />
           </div>
           <span className="logo-text">CryptoHub</span>
         </Link>
-      </div>
 
-      {!isDashboardPage && (
-        <>
-          {/* Desktop Menu */}
-          <ul className="nav-links desktop-only">
+        {/* Desktop Navigation Menu */}
+        {!isDashboardPage && (
+          <ul className="navbar-menu desktop-only">
             {(currentUser ? authenticatedNavLinks : navLinks).map((link) => (
-              <li key={link.to} className={`nav-item ${location.pathname === link.to ? "active" : ""}`}>
-                <Link to={link.to} className="nav-link">
+              <li key={link.to} className="navbar-item">
+                <Link 
+                  to={link.to} 
+                  className={`navbar-link ${location.pathname === link.to ? "active" : ""}`}
+                  onClick={closeMobileMenu}
+                >
                   {link.label}
                 </Link>
               </li>
             ))}
           </ul>
-        </>
-      )}
+        )}
 
-      <div className="nav-right">
-        <div className="theme-toggle" onClick={toggleTheme} title="Toggle Theme">
-          <div className={`toggle-track ${isDark ? "dark" : "light"}`}>
-            <div className="toggle-thumb"></div>
-          </div>
-        </div>
-
-        <div className="desktop-auth">
+        {/* Right Side Actions - Desktop */}
+        <div className="navbar-actions desktop-only">
           {currentUser ? (
-            <>
-              <div className="user-info">
-                <span className="user-email">{currentUser.email}</span>
-              </div>
+            <div className="user-menu">
+              <span className="user-email">{currentUser.email}</span>
+              {isEmailProvider() && (
+                <Link to="/change-password" className="icon-btn" title="Change Password">
+                  <FiLock />
+                </Link>
+              )}
               <button onClick={handleLogout} className="logout-btn">
                 Logout
               </button>
-            </>
+            </div>
           ) : (
             <>
-              <Link to="/login">
-                <button className="login-btn">LOGIN</button>
+              <Link to="/login" className="navbar-btn navbar-btn-login">
+                LOGIN
               </Link>
-              <Link to="/signup">
-                <button className="signup-btn">Sign up</button>
+              <Link to="/signup" className="navbar-btn navbar-btn-signup">
+                Get Started
               </Link>
             </>
           )}
         </div>
 
-        {/* Mobile Toggle */}
-        <div className="mobile-toggle" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-          {isMobileMenuOpen ? <FiX size={28} /> : <FiMenu size={28} />}
-        </div>
+        {/* Mobile Toggle Button */}
+        <button 
+          className="navbar-toggle mobile-only"
+          onClick={toggleMobileMenu}
+          aria-label="Toggle navigation menu"
+        >
+          {isMobileMenuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
+        </button>
       </div>
 
       {/* Mobile Menu Dropdown */}
       <div className={`mobile-menu ${isMobileMenuOpen ? 'open' : ''}`}>
         <ul className="mobile-nav-links">
           {!isDashboardPage && (currentUser ? authenticatedNavLinks : navLinks).map((link) => (
-            <Link
-              key={link.to}
-              to={link.to}
-              onClick={() => setIsMobileMenuOpen(false)}
-              className={`mobile-nav-item ${location.pathname === link.to ? "active" : ""}`}
-            >
-              {link.label}
-            </Link>
+            <li key={link.to} className="mobile-nav-item">
+              <Link
+                to={link.to}
+                onClick={closeMobileMenu}
+                className={`mobile-nav-link ${location.pathname === link.to ? "active" : ""}`}
+              >
+                {link.label}
+              </Link>
+            </li>
           ))}
         </ul>
 
         <div className="mobile-controls">
           <div className="mobile-control-item" onClick={toggleTheme}>
             <span>Theme</span>
-            <div className={`toggle-track ${isDark ? "dark" : "light"}`}>
+            <div className={`toggle-track ${theme === 'dark' ? "dark" : "light"}`}>
               <div className="toggle-thumb"></div>
             </div>
           </div>
@@ -151,115 +149,28 @@ function Navbar() {
 
         <div className="mobile-auth">
           {currentUser ? (
-            <button onClick={handleLogout} className="logout-btn full-width">Logout</button>
+            <>
+              {isEmailProvider() && (
+                <Link to="/change-password" className="mobile-change-password" onClick={closeMobileMenu}>
+                  <FiLock /> Change Password
+                </Link>
+              )}
+              <button onClick={handleLogout} className="logout-btn full-width">
+                Logout
+              </button>
+            </>
           ) : (
             <div className="mobile-auth-buttons">
-              <Link to="/login" onClick={() => setIsMobileMenuOpen(false)}>
+              <Link to="/login" onClick={closeMobileMenu}>
                 <button className="login-btn full-width">LOGIN</button>
               </Link>
-              <Link to="/signup" onClick={() => setIsMobileMenuOpen(false)}>
-                <button className="signup-btn full-width">Sign up</button>
+              <Link to="/signup" onClick={closeMobileMenu}>
+                <button className="signup-btn full-width">Get Started</button>
               </Link>
             </div>
           )}
         </div>
-
-        {/* Desktop Navigation */}
-        <div className="nav-links desktop-only">
-          {!isDashboardPage && (
-            <>
-              {(currentUser ? authenticatedNavLinks : navLinks).map((link) => (
-                <Link
-                  key={link.to}
-                  to={link.to}
-                  className={location.pathname === link.to ? "active" : ""}
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </>
-          )}
-        </div>
-
-        <div className="nav-right desktop-only">
-          {/* Currency Selector Removed as per request */}
-
-          {currentUser ? (
-            <div className="user-menu">
-              <span className="user-email">{currentUser.email}</span>
-
-               {/* Change Password - Only for email/password users */}
-                {isEmailProvider() && (
-                  <Link 
-                    to="/change-password" 
-                    className="icon-btn" 
-                    title="Change Password"
-                  >
-                    <FiLock />
-                  </Link>
-                )}
-
-              <button onClick={handleLogout} className="icon-btn" title="Logout">
-                <FiLogOut />
-              </button>
-            </div>
-          ) : (
-            <div className="auth-buttons">
-              <Link to="/login" className="btn-glass-nav">Log In</Link>
-              <Link to="/signup" className="btn-neon">Get Started</Link>
-            </div>
-          )}
-        </div>
-
-        {/* Mobile Menu Toggle */}
-        <button
-          className="mobile-toggle"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        >
-          {isMobileMenuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
-        </button>
       </div>
-
-      {/* Mobile Menu */}
-      {isMobileMenuOpen && (
-        <div className="mobile-menu glass-panel">
-          <ul className="mobile-nav-links">
-            {(currentUser ? authenticatedNavLinks : navLinks).map((link) => (
-              <li key={link.to}>
-                <Link
-                  to={link.to}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className={location.pathname === link.to ? "active" : ""}
-                >
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-          <div className="mobile-actions">
-            {!currentUser && (
-              <>
-                <Link to="/login" onClick={() => setIsMobileMenuOpen(false)}>Log In</Link>
-                <Link to="/signup" className="btn-primary" onClick={() => setIsMobileMenuOpen(false)}>Get Started</Link>
-              </>
-            )}
-           {currentUser && (
-          <>
-            {isEmailProvider() && (
-              <Link 
-                to="/change-password" 
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="btn-text"
-              >
-                Change Password
-              </Link>
-            )}
-            <button onClick={handleLogout} className="btn-text">Logout</button>
-          </>
-        )}
-          </div>
-        </div>
-      )}
     </nav>
   );
 }
