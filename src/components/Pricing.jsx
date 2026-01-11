@@ -199,16 +199,16 @@ export default function Pricing() {
 
       {/* Pricing Cards */}
       <motion.section
-        className="py-24 px-8"
+        className="py-20 px-8"
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
       >
         <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-8 lg:gap-12">
-          {plans.map((plan, index) => {
-            const isHovered = hoveredPlan === plan.name;
-            const currentPrice = getPrice(plan.price, billingCycle);
+          {plans.map((plan) => {
+            const isHovered = hoveredPlan === plan?.name;
+            const currentPrice = getPrice(plan?.price, billingCycle);
 
             return (
               <motion.div
@@ -299,7 +299,7 @@ export default function Pricing() {
 
       {/* FIXED: Working Comparison Table */}
       <motion.section
-        className="py-24 px-6 bg-linear-to-b from-gray-50/50 to-transparent dark:from-gray-900/50"
+        className="py-20 px-6 bg-linear-to-b from-gray-50/50 to-transparent dark:from-gray-900/50"
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
@@ -399,12 +399,12 @@ export default function Pricing() {
                 viewport={{ once: true }}
               >
                 <motion.button
-                  className="w-full p-10 text-left hover:bg-white/50 dark:hover:bg-gray-800/50 transition-all duration-300"
+                  className="w-full py-8 px-10 text-left hover:bg-white/50 dark:hover:bg-gray-800/50 transition-all duration-300"
                   onClick={() => setOpenFaqIndex(openFaqIndex === index ? null : index)}
                   whileTap={{ scale: 0.98 }}
                 >
                   <div className="flex items-center justify-between">
-                    <h4 className="text-2xl font-bold text-gray-900 dark:text-white">
+                    <h4 className="text-lg md:text-xl font-bold text-gray-900 dark:text-white">
                       {faq.question}
                     </h4>
                     <motion.div
@@ -424,7 +424,7 @@ export default function Pricing() {
                       exit={{ height: 0, opacity: 0 }}
                       transition={{ duration: 0.3, ease: "easeInOut" }}
                     >
-                      <div className="p-10 pt-0 pb-12 text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+                      <div className="px-10 pb-8 text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
                         {faq.answer}
                       </div>
                     </motion.div>
