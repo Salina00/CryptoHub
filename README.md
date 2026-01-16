@@ -35,12 +35,8 @@
   - [📋 Prerequisites](#prerequisites)
   - [🔧 Environment Setup](#environment-setup)
   - [🏃 Running Locally](#running-locally)
-- [🛠️ Troubleshooting](#troubleshooting)
 - [📁 Project Structure](#project-structure)
-- [🎨 Design Philosophy](#design-philosophy)
-- [📱 Responsive Design](#responsive-design)
 - [👨‍💼 Project Leadership](#project-leadership)
-- [❓ FAQ](#faq)
 - [✴️ Issue Creation](#issue-creation)
 - [📑 Contribution Guidelines](#contribution-guidelines)
 - [🤝 Contributing](#contributing)
@@ -185,6 +181,28 @@ flowchart TD
   E --> Q[Change Password]
 ```
 
+**Market Data Lifecycle**
+
+</div>
+
+```mermaid
+graph LR
+    subgraph External
+    CG[(CoinGecko API)]
+    end
+    
+    subgraph React_App
+    CC[CoinContext]
+    H[Home Page]
+    D[Details Page]
+    end
+    
+    CG -- "JSON Data" --> CC
+    CC -- "State: coinsArray" --> H
+    CC -- "State: singleCoin" --> D
+    H -- "User Search" --> CC
+```
+
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
 
 <h2 id="key-features">🌟 Key Features</h2>
@@ -291,61 +309,6 @@ VITE_FIREBASE_APP_ID=your-app-id
 - **CoinGecko API**: Sign up at [CoinGecko API](https://www.coingecko.com/en/api)
 - **Firebase**: Go to [Firebase Console](https://console.firebase.google.com/) → Project Settings → Your Apps
 
-### 🔐 Firebase Google OAuth Setup
-
-**Important:** To enable Google Sign-In, follow these steps:
-
-#### Step 1: Enable Google Authentication in Firebase
-
-1. Go to [Firebase Console](https://console.firebase.google.com/)
-2. Select your project
-3. Navigate to **Authentication** → **Sign-in method**
-4. Click on **Google** in the providers list
-5. Toggle **Enable**
-6. Set **Project support email** (your email)
-7. Click **Save**
-
-#### Step 2: Configure Authorized Domains
-
-For **local development**, add authorized domains:
-
-1. In Firebase Console → **Authentication** → **Settings** tab
-2. Scroll to **Authorized domains**
-3. Click **Add domain**
-4. Add the following:
-   - `localhost` (for local development)
-   - `127.0.0.1` (alternative localhost)
-   - Your deployment domain (e.g., `cryptohub.vercel.app`)
-
-> **Note:** Without adding `localhost` to authorized domains, Google OAuth will not work in local development!
-
-#### Step 3: Verify OAuth Configuration
-
-**Test Google Sign-In:**
-1. Run `npm run dev`
-2. Click "Sign up" or "Login"
-3. Try Google authentication
-4. If you see **"auth/unauthorized-domain"** error:
-   - Double-check authorized domains in Firebase Console
-   - Ensure `localhost` is added
-   - Clear browser cache and retry
-
-#### Troubleshooting Google Auth
-
-**Common Issues:**
-
-| Error | Solution |
-|-------|----------|
-| `auth/unauthorized-domain` | Add `localhost` to Firebase authorized domains |
-| `auth/popup-blocked` | Allow popups in browser settings |
-| `auth/network-request-failed` | Check internet connection & Firebase config |
-| `auth/invalid-api-key` | Verify `VITE_FIREBASE_API_KEY` in `.env` |
-
-**Firebase Console Quick Links:**
-- [Authentication Settings](https://console.firebase.google.com/project/_/authentication/providers)
-- [Authorized Domains](https://console.firebase.google.com/project/_/authentication/settings)
-
-
 <h3 id="running-locally">🏃 Running Locally</h3>
 
 ### 4. Start the development server
@@ -371,19 +334,6 @@ npm run build
 ```bash
 npm run preview
 ```
-
-<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
-
-<h2 id="troubleshooting">🛠️ Troubleshooting</h2>
-
-Common issues and their solutions:
-
-- ⛔ **Node version errors** - Check `node -v` (requires v14+)
-- 🔐 **Missing .env file** - Ensure `.env` exists with all required keys
-- 🔌 **Port already in use** - Vite will automatically try ports 5174, 5175, etc.
-- 🌐 **API errors** - Verify CoinGecko API key is valid and not rate-limited
-- 🔥 **Firebase errors** - Check Firebase configuration and authentication is enabled
-- 🎨 **Theme not persisting** - Clear browser localStorage and try again
 
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
 
@@ -469,186 +419,17 @@ CryptoHub/
 
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
 
-<h2 id="design-philosophy">🎨 Design Philosophy</h2>
-
-### Visual Identity
-
-- **Glassmorphism** - Modern frosted glass aesthetic
-- **Vibrant Gradients** - Purple (#7927ff) to Cyan (#00f3ff) transitions with Orange accents (#ff6b35)
-- **Smooth Animations** - Micro-interactions with Framer Motion
-- **Dark-First Design** - Eye-friendly default with light mode toggle
-
-### Color Palette (Logo Inspired)
-
-```css
---neon-purple: #7927ff      /* Primary brand color */
---neon-cyan: #00f3ff        /* Accent color */
---neon-orange: #ff6b35      /* Call-to-action */
---neon-green: #00e676       /* Success indicators */
---glass-surface: rgba(255, 255, 255, 0.03)
---glass-border: rgba(255, 255, 255, 0.06)
-```
-
-<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
-
-<h2 id="responsive-design">📱 Responsive Design</h2>
-
-### Comprehensive Breakpoints
-
-- **Desktop:** 1024px+ - Full feature set with all columns visible
-- **Tablet:** 768px - 1024px - Optimized spacing and font sizes
-- **Mobile:** 481px - 768px - Horizontal scroll enabled, compact layout
-- **Small Mobile:** 320px - 480px - Maximum space efficiency
-
-### Mobile Optimizations
-
-✅ **Navbar**
-- Hamburger menu with smooth slide-down animation
-- Touch-optimized buttons (44px minimum)
-- Compact logo and spacing
-
-✅ **Coin List Table**
-- **Horizontal scrolling** - All 5 columns visible (Rank, Asset, Price, Change, Market Cap)
-- Smooth swipe gestures
-- Optimized font sizes for readability
-
-✅ **Hero Section**
-- Floating crypto tickers **visible on mobile** with compact styling
-- Responsive heights (50vh - 70vh)
-- Full-width search bar
-
-✅ **General**
-- Touch-friendly interactive elements
-- Optimized images
-- Fast performance on 3G/4G
-
-<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
-
 ---
 
-<h2 id="faq">❓ Frequently Asked Questions (FAQ)</h2>
+## 📖 Extended Documentation
 
-<details>
-<summary><b>Q1: Is CryptoHub free to use?</b></summary>
-<br/>
-Yes! CryptoHub is completely free and open-source. You can access real-time crypto prices, charts, and basic features without any cost. Premium features are planned for future releases.
-</details>
+Detailed guides to help you get started:
+- ❓ [General FAQ](./docs/FAQ.md)
+- 🔥 [Full Firebase & OAuth Setup](./docs/FIREBASE_SETUP.md)
+- 🎨 [Design System & Branding](./docs/DESIGN.md)
+- 🛠 [Advanced Troubleshooting](./docs/TROUBLESHOOTING.md)
 
-<details>
-<summary><b>Q2: Do I need an account to view cryptocurrency prices?</b></summary>
-<br/>
-No, you can browse crypto prices, search coins, and view charts without creating an account. However, you'll need to sign up to access features like the Dashboard, Leaderboard, and personalized portfolio tracking.
-</details>
-
-<details>
-<summary><b>Q3: How often are cryptocurrency prices updated?</b></summary>
-<br/>
-Prices are fetched in real-time from the CoinGecko API. The data refreshes automatically to ensure you always see the most current market information.
-</details>
-
-<details>
-<summary><b>Q4: What cryptocurrencies are supported?</b></summary>
-<br/>
-CryptoHub supports 100+ major cryptocurrencies including Bitcoin, Ethereum, Solana, Cardano, BNB, and many more. You can search for any coin using the search bar on the home page.
-</details>
-
-<details>
-<summary><b>Q5: How do I sign up for an account?</b></summary>
-<br/>
-Click the "Sign up" button in the navbar, enter your name, email, and password. You'll receive a verification email from Firebase. Verify your email to activate your account.
-</details>
-
-<details>
-<summary><b>Q6: Can I use CryptoHub on mobile devices?</b></summary>
-<br/>
-Absolutely! CryptoHub is fully responsive and works seamlessly on all devices - desktop, tablet, and mobile. The UI adapts perfectly to your screen size.
-</details>
-
-<details>
-<summary><b>Q7: What is the difference between Light and Dark mode?</b></summary>
-<br/>
-CryptoHub offers both Light and Dark themes for comfortable viewing. Click the theme toggle in the navbar to switch between modes. Your preference is saved locally.
-</details>
-
-<details>
-<summary><b>Q8: How do I view detailed information about a specific coin?</b></summary>
-<br/>
-Click on any cryptocurrency in the coin list table. You'll be redirected to a detailed page showing:
-- Interactive 10-day price chart
-- Current price
-- 24-hour change
-- Market cap
-- Price history
-</details>
-
-<details>
-<summary><b>Q10: What if I forget my password?</b></summary>
-<br/>
-No worries! Click "Forgot password?" on the login page, enter your email address, and you'll receive a password reset link. Click the link in your email to create a new password securely.
-</details>
-
-<details>
-<summary><b>Q11: Can I change my password?</b></summary>
-<br/>
-Yes! If you signed up with email/password, navigate to Dashboard and click the lock icon, or go to `/change-password` to update your password securely.
-</details>
-
-<details>
-<summary><b>Q12: How can I contribute to this project?</b></summary>
-<br/>
-We welcome contributions! Here's how:
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Submit a Pull Request
-
-Check the [Contributing Guidelines](#contributing) for detailed steps.
-</details>
-
-<details>
-<summary><b>Q13: What happens if the CoinGecko API rate limit is exceeded?</b></summary>
-<br/>
-The free CoinGecko API has rate limits. If exceeded, you may see delayed data updates. For production use, consider upgrading to a paid CoinGecko API plan for higher limits.
-</details>
-
-<details>
-<summary><b>Q14: Is my data secure?</b></summary>
-<br/>
-Yes! We use Firebase Authentication for secure user management. Passwords are encrypted and never stored in plain text. We follow industry-standard security practices.
-</details>
-
-<details>
-<summary><b>Q15: Can I deploy CryptoHub to my own server?</b></summary>
-<br/>
-Yes! CryptoHub can be deployed to:
-- Vercel (recommended)
-- Netlify
-- AWS
-- Any platform supporting React + Vite
-
-Check the [Installation Setup](#installation-and-setup) section for deployment instructions.
-</details>
-
-<details>
-<summary><b>Q16: What should I do if I find a bug?</b></summary>
-<br/>
-Please report bugs by:
-1. Opening an [Issue](https://github.com/KaranUnique/CryptoHub/issues)
-2. Providing screenshots if UI-related
-3. Describing steps to reproduce
-4. Mentioning your browser/device info
-</details>
-
-<details>
-<summary><b>Q17: How can I request a new feature?</b></summary>
-<br/>
-Create a [Feature Request](https://github.com/KaranUnique/CryptoHub/issues) issue with:
-- Clear description of the feature
-- Use case/benefits
-- Any mockups or examples (optional)
-
-We review all suggestions and prioritize based on community needs.
-</details>
+<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
 
 ---
 
