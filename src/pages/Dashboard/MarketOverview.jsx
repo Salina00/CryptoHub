@@ -45,10 +45,12 @@ const MarketOverview = () => {
         <>
             <div className="mb-10">
                 <h1 className="text-4xl sm:text-5xl font-black mb-4 leading-tight">
-                    <span className="bg-gradient-to-r from-[#7927ff] via-[#9945ff] to-[#2193b0] bg-clip-text text-transparent">
+                    <span className="bg-gradient-to-r from-[#00d9ff] to-[#00a8cc] bg-clip-text text-transparent">
                         Market Overview
                     </span>
-                    <span className="inline-block ml-3 text-4xl">📊</span>
+                    <svg className="inline-block ml-3 w-10 h-10 text-[#00d9ff]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    </svg>
                 </h1>
                 <p className={`text-lg ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
                     Real-time cryptocurrency market insights
@@ -58,12 +60,12 @@ const MarketOverview = () => {
             <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-6">
                 {/* Top Gainers */}
                 <div className={`rounded-2xl p-8 border transition-all duration-300 hover:shadow-2xl ${isDark
-                    ? 'bg-[rgba(15,8,40,0.6)] backdrop-blur-xl border-[rgba(121,39,255,0.15)] shadow-[0_8px_32px_0_rgba(121,39,255,0.12)]'
+                    ? 'bg-[#14141f] border-[rgba(255,255,255,0.08)] shadow-[0_8px_32px_0_rgba(0,0,0,0.3)]'
                     : 'bg-white border-gray-200 shadow-xl'
                     }`}>
                     <div className="flex items-center gap-4 mb-6">
-                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-green-500 to-green-600 flex items-center justify-center shadow-lg">
-                            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div className="w-12 h-12 rounded-xl bg-[rgba(74,222,128,0.1)] border border-[rgba(74,222,128,0.2)] flex items-center justify-center shadow-lg">
+                            <svg className="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                             </svg>
                         </div>
@@ -105,12 +107,12 @@ const MarketOverview = () => {
 
                 {/* Top Losers */}
                 <div className={`rounded-2xl p-8 border transition-all duration-300 hover:shadow-2xl ${isDark
-                    ? 'bg-[rgba(15,8,40,0.6)] backdrop-blur-xl border-[rgba(121,39,255,0.15)] shadow-[0_8px_32px_0_rgba(121,39,255,0.12)]'
+                    ? 'bg-[#14141f] border-[rgba(255,255,255,0.08)] shadow-[0_8px_32px_0_rgba(0,0,0,0.3)]'
                     : 'bg-white border-gray-200 shadow-xl'
                     }`}>
                     <div className="flex items-center gap-4 mb-6">
-                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-red-500 to-red-600 flex items-center justify-center shadow-lg">
-                            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div className="w-12 h-12 rounded-xl bg-[rgba(239,68,68,0.1)] border border-[rgba(239,68,68,0.2)] flex items-center justify-center shadow-lg">
+                            <svg className="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6" />
                             </svg>
                         </div>
@@ -153,12 +155,12 @@ const MarketOverview = () => {
 
             {/* Trending Cryptocurrencies */}
             <div className={`rounded-2xl p-8 border transition-all duration-300 hover:shadow-2xl ${isDark
-                ? 'bg-[rgba(15,8,40,0.6)] backdrop-blur-xl border-[rgba(121,39,255,0.15)] shadow-[0_8px_32px_0_rgba(121,39,255,0.12)]'
+                ? 'bg-[#14141f] border-[rgba(255,255,255,0.08)] shadow-[0_8px_32px_0_rgba(0,0,0,0.3)]'
                 : 'bg-white border-gray-200 shadow-xl'
                 }`}>
                 <div className="flex items-center gap-4 mb-6">
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#7927ff] to-[#2193b0] flex items-center justify-center shadow-lg">
-                        <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="w-12 h-12 rounded-xl bg-[rgba(0,217,255,0.1)] border border-[rgba(0,217,255,0.2)] flex items-center justify-center shadow-lg">
+                        <svg className="w-6 h-6 text-[#00d9ff]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                         </svg>
                     </div>
@@ -172,7 +174,7 @@ const MarketOverview = () => {
                             key={coin.id}
                             onClick={() => navigate(`/coin/${coin.id}`)}
                             className={`p-4 rounded-xl cursor-pointer transition-all duration-200 hover:scale-105 ${isDark
-                                ? 'bg-[rgba(255,255,255,0.03)] hover:bg-[rgba(255,255,255,0.05)]'
+                                ? 'bg-[rgba(255,255,255,0.02)] hover:bg-[rgba(255,255,255,0.03)]'
                                 : 'bg-gray-50 hover:bg-gray-100'
                                 }`}
                         >

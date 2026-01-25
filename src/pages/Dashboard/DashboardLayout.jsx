@@ -62,7 +62,7 @@ const DashboardLayout = () => {
             <aside
                 className={`fixed lg:sticky top-0 left-0 h-screen transition-all duration-300 z-50 ${sidebarOpen ? "w-72" : "w-0 lg:w-20"
                     } overflow-hidden ${isDark
-                        ? 'bg-[rgba(10,10,26,0.95)] border-[rgba(0,217,255,0.1)]'
+                        ? 'bg-[#0f0f1f] border-[rgba(255,255,255,0.08)]'
                         : 'bg-white border-gray-200'
                     } backdrop-blur-2xl border-r shadow-2xl`}
             >
@@ -73,9 +73,9 @@ const DashboardLayout = () => {
                                 <img
                                     src="/crypto-logo.png"
                                     alt="CryptoHub"
-                                    className="h-10 w-10 rounded-full object-cover border-2 border-[rgba(0,217,255,0.5)] shadow-lg transition-all duration-300 hover:scale-110"
+                                    className="h-10 w-10 rounded-full object-cover border-2 border-[rgba(0,217,255,0.3)] shadow-lg transition-all duration-300 hover:scale-110"
                                 />
-                                <h1 className="text-xl font-extrabold bg-gradient-to-r from-[#00d9ff] to-[#00a8cc] bg-clip-text text-transparent">
+                                <h1 className="text-xl font-extrabold text-[#00d9ff]">
                                     CryptoHub
                                 </h1>
                             </div>
@@ -95,11 +95,11 @@ const DashboardLayout = () => {
 
                     {sidebarOpen && (
                         <div className={`mb-6 p-4 rounded-xl border transition-all duration-200 ${isDark
-                            ? 'bg-[rgba(255,255,255,0.03)] border-[rgba(0,217,255,0.2)] hover:border-[rgba(0,217,255,0.4)]'
+                            ? 'bg-[rgba(255,255,255,0.02)] border-[rgba(255,255,255,0.08)] hover:border-[rgba(0,217,255,0.2)]'
                             : 'bg-gradient-to-br from-purple-50 to-blue-50 border-purple-200 hover:border-purple-300'
                             }`}>
                             <div className="flex items-center gap-3">
-                                <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[#00d9ff] to-[#00a8cc] flex items-center justify-center text-2xl font-bold shadow-lg ring-4 ring-[rgba(0,217,255,0.12)] text-[#0a0a1a]">
+                                <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[#00d9ff] to-[#00a8cc] flex items-center justify-center text-2xl font-bold shadow-lg ring-4 ring-[rgba(0,217,255,0.1)] text-[#0a0a1a]">
                                     {getFirstName().charAt(0).toUpperCase()}
                                 </div>
                                 <div className="flex-1 min-w-0">
@@ -120,9 +120,9 @@ const DashboardLayout = () => {
                                 key={index}
                                 onClick={() => navigate(item.path)}
                                 className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-xl transition-all duration-200 font-medium ${location.pathname === item.path
-                                    ? "bg-gradient-to-r from-[#00d9ff] to-[#00a8cc] text-[#0a0a1a] shadow-lg shadow-cyan-500/25 font-bold"
+                                    ? "bg-[rgba(0,217,255,0.1)] text-[#00d9ff] border border-[rgba(0,217,255,0.2)]"
                                     : isDark
-                                        ? "text-gray-300 hover:bg-[rgba(0,217,255,0.1)] hover:text-[#00d9ff]"
+                                        ? "text-gray-300 hover:bg-[rgba(0,217,255,0.05)] hover:text-[#00d9ff]"
                                         : "text-gray-700 hover:bg-purple-50 hover:text-purple-700"
                                     } ${!sidebarOpen && "justify-center"}`}
                             >
@@ -132,18 +132,38 @@ const DashboardLayout = () => {
                         ))}
                     </nav>
 
-                    <button
-                        onClick={handleLogout}
-                        className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-xl transition-all duration-200 font-medium border ${isDark
-                            ? 'bg-red-900/20 hover:bg-red-900/30 text-red-400 border-red-600/30 hover:border-red-500/50'
-                            : 'bg-red-50 hover:bg-red-100 text-red-600 border-red-200 hover:border-red-300'
-                            } ${!sidebarOpen && "justify-center"}`}
-                    >
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                        </svg>
-                        {sidebarOpen && <span>Logout</span>}
-                    </button>
+                    {sidebarOpen && (
+                        <div className="mt-auto space-y-3">
+                            {/* Logout Button */}
+                            <button
+                                onClick={handleLogout}
+                                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 font-medium border ${isDark
+                                    ? 'bg-red-900/20 hover:bg-red-900/30 text-red-400 border-red-600/30 hover:border-red-500/50'
+                                    : 'bg-red-50 hover:bg-red-100 text-red-600 border-red-200 hover:border-red-300'
+                                    }`}
+                            >
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                                </svg>
+                                <span>Logout</span>
+                            </button>
+                        </div>
+                    )}
+
+                    {/* Collapsed State Logout Icon */}
+                    {!sidebarOpen && (
+                        <button
+                            onClick={handleLogout}
+                            className={`w-full flex items-center justify-center p-3 rounded-xl transition-all duration-200 border ${isDark
+                                ? 'bg-red-900/20 hover:bg-red-900/30 text-red-400 border-red-600/30 hover:border-red-500/50'
+                                : 'bg-red-50 hover:bg-red-100 text-red-600 border-red-200 hover:border-red-300'
+                                }`}
+                        >
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                            </svg>
+                        </button>
+                    )}
                 </div>
             </aside>
 
