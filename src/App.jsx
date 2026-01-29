@@ -28,6 +28,7 @@ import { Toaster } from "react-hot-toast";
 import ScrollToTop from "@/components/ScrollToTop";
 import PrivacyPolicy from "@/pages/PrivacyPolicy.jsx";
 import TermsConditions from "@/pages/TermsConditions.jsx";
+import CookiePolicy from "@/components/CookiePolicy";
 
 const App = () => {
   const { isLoading } = useContext(CoinContext);
@@ -114,7 +115,7 @@ const App = () => {
 
               <Route path="/privacy" element={<PrivacyPolicy />} />
 
-
+  <Route path="/cookies" element={<CookiePolicy />} />
             </Routes>
             {!isDashboard && <Footer />}
           </div>
