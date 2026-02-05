@@ -41,8 +41,7 @@ const App = () => {
     location.pathname === "/dashboard" ||
     location.pathname === "/leaderboard" ||
     location.pathname === "/market-overview" ||
-    location.pathname === "/change-password" ||
-    location.pathname.startsWith("/coin/");
+    location.pathname === "/change-password" ;
 
   useEffect(() => {
     AOS.init({
