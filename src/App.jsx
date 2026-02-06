@@ -43,6 +43,9 @@ const App = () => {
     location.pathname === "/market-overview" ||
     location.pathname === "/change-password" ;
 
+  const authRoutes = ["/login", "/signup", "/forgot-password"];
+  const isAuthPage = authRoutes.includes(location.pathname);
+
   useEffect(() => {
     AOS.init({
       duration: 1000,
@@ -135,7 +138,7 @@ const App = () => {
                 <Route path="/cookies" element={<CookiePolicy />} />
               </Routes>
             </div>
-            {!isDashboard && <Footer />}
+           {!isDashboard && !isAuthPage && <Footer />}
           </div>
           <ScrollToTop />
         </AuthProvider>
